@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV to Chart</title>
+    <style>
+        .green {
+            color: darkgreen;
+            font-weight: bold;
+        }
+
+        .window {
+            width: 300px;
+            border: 1px solid black;
+            padding: 25px;
+            margin: 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <form method="POST" action="?">
+            {% csrf_token %}
+            <select name="file">
+                {% for file in import %}
+                    <option value="{{ file }}">{{ file }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit"/>
+        </form>
+        {% if message %}
+            <p>
+                <span class="green">File {{ message }} saved in database</span>
+            </p>
+        {% endif %}
+    </div>
+    <div class="window">
+        <form method="POST">
+            {% csrf_token %}
+            <select name="dataset">
+                {% for dataset in datasets %}
+                    <option value="{{ dataset }}">{{ dataset }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Draw chart"/>
+        </form>
+    </div>
+</body>
+</html>
